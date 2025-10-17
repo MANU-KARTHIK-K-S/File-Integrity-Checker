@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>File Integrity Checker</title><!-- Link to the custom CSS file in the static folder -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}"><!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+
+<body>
+    <header>
+        <h1><i class="fas fa-fingerprint"></i> File Integrity Checker</h1>
+        <p>Securely generate cryptographic hashes for your files.</p>
+    </header>
+    <main class="container">
+        <!-- File Upload Section -->
+        <section id="upload-section" class="card drop-area">
+            <h2>Select File</h2>
+            <input type="file" id="fileInput" hidden>
+            <label for="fileInput" class="button primary-button"><i class="fas fa-upload"></i> Choose File or Drag
+                Here</label>
+            <p id="fileNameDisplay" class="file-name-display">No file selected.</p>
+        </section>
+
+        <!-- Algorithm Selection Section -->
+        <section id="settings-section" class="card">
+            <h2>Algorithm Settings</h2>
+            <div class="select-group">
+                <label for="algorithmSelect">Hash Algorithm:</label>
+                <select id="algorithmSelect">
+                    <option value="sha256" selected>SHA-256 (Recommended)</option>
+                    <option value="sha512">SHA-512</option>
+                    <option value="md5">MD5 (Legacy)</option>
+                    <option value="sha1">SHA-1 (Legacy)</option>
+                </select>
+            </div>
+            <button id="hashButton" class="button secondary-button" disabled><i class="fas fa-calculator"></i> Calculate
+                Hash</button>
+        </section>
+
+        <!-- Results Section -->
+        <section id="result-section" class="card hidden">
+            <h2>Hash Result</h2>
+            <div class="result-box">
+                <!-- Span will be updated by JS with the current algorithm name -->
+                <p class="result-label">Calculated Hash (<span id="algoNameDisplay"></span>):</p>
+                <div class="hash-display-wrapper">
+                    <pre id="hashResult" class="hash-display">---</pre>
+                    <!-- Icon for copying hash -->
+                    <button id="copyButton" class="icon-button" title="Copy to Clipboard"><i class="far fa-copy"
+                            id="copyIcon"></i></button>
+                </div>
+            </div>
+
+            <hr>
+
+            <!-- Comparison Tool -->
+            <h2>Compare Hash</h2>
+            <div class="compare-group">
+                <input type="text" id="comparisonInput" placeholder="Paste hash for comparison...">
+                <button id="compareButton" class="button tertiary-button" disabled><i class="fas fa-check-double"></i>
+                    Compare</button>
+            </div>
+            <!-- Message area for comparison result -->
+            <p id="comparisonResult" class="comparison-message"></p>
+        </section>
+
+        <!-- Loading Indicator -->
+        <div id="loadingIndicator" class="loading-overlay hidden">
+            <div class="spinner"></div>
+            <p>Processing file... This may take a moment for large files.</p>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 File Integrity Checker | Powered by Python's Hashlib</p>
+    </footer>
+
+    <!-- Link to the custom JavaScript file -->
+    <script src="{{ url_for('static', filename='app.js') }}"></script>
+</body>
+
+</html>
